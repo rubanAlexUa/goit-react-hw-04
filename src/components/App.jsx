@@ -23,8 +23,13 @@ function App() {
   const [loader, setLoader] = useState(false);
   const handleQuery = (e) => {
     e.preventDefault();
-    setArticles([]);
     setQuery(inputValue.trim(" "));
+    if (inputValue === "") {
+      toast.error("Nope!");
+      return;
+    }
+    e.preventDefault();
+    setArticles([]);
     setPage(1);
   };
   useEffect(() => {
@@ -77,7 +82,11 @@ function App() {
       {error && <ErrorMessage query={query} />}
       {articles.length > 0 && <LoadMoreBtn onClick={() => setPage(page + 1)} />}
       {openedModal && (
-        <ImageModal fullImage={fullImage} exitModal={exitModal} />
+        <ImageModal
+          fullImage={fullImage}
+          exitModal={exitModal}
+          openedModal={openedModal}
+        />
       )}
       <Toaster />
     </>
